@@ -77,6 +77,9 @@ namespace proj
             studentCount++;
             Console.WriteLine("Student added successfully.");
         }
+        /**
+         * Get valid integer input
+         */
         public static int GetValidIntInput(string prompt)
         {
             int result;
@@ -107,9 +110,8 @@ namespace proj
                 if (student != null && student.Id == studentId)
                 {
                     Console.WriteLine("Student Found:");
-                    Console.WriteLine($"ID: {student.Id}, Name: {student.Name}, Age:{ student.Age}, Course: { student.Course}");
-                
-return;
+                    Console.WriteLine($"ID: {student.Id}, Name: {student.Name}, Age:{ student.Age}, Course: { student.Course}");                
+                    return;
                 }
             }
             Console.WriteLine("Student not found.");
@@ -119,6 +121,7 @@ return;
             Console.WriteLine("Update Student");
             Console.WriteLine("----------------");
             int studentId = GetValidIntInput("Enter Student ID you want to update: ");
+            // TODO much better of traversing foreach
             for (int i = 0; i < studentCount; i++)
             {
                 if (students[i].Id == studentId)
@@ -147,13 +150,14 @@ return;
                 if (student != null && student.Id == studentId)
                 {
                     // get the counter
-                     Console.WriteLine("Student Found:");
+                    Console.WriteLine("Student Found:");
                     Console.WriteLine($"ID: {student.Id}, Name: {student.Name}, Age:{ student.Age}, Course: { student.Course}");
                 
                     // put a confirmation statement
                     Console.WriteLine("Do you really want to delete this Student ID? ");
                     // get the confirmation
                     int choice = GetValidIntInput("Enter your choice (1 for yes, 2 for no): ");
+                    // TODO: much better with switch statement
                     if (choice == 1)
                     {
                         // remove the record by index
@@ -175,24 +179,6 @@ return;
                 studentIdx++;
             }
 
-            // if no student found 
-   
-                //Console.WriteLine("Student not found.");
-
-            /*
-            for (int i = 0; i < studentCount; i++)
-            {
-                if (students[i].Id == studentId)
-                {
-                    students[i] = students[studentCount - 1];
-                    students[studentCount - 1] = null;
-                    studentCount--;
-                    Console.WriteLine("Student deleted successfully.");
-                    return;
-                }
-            }
-            Console.WriteLine("Student not found.");
-            */
         }
         public static void ListAllStudents()
         {
@@ -206,15 +192,9 @@ return;
             }
             else
             {
-                /*
-                for (int i = 0; i < studentCount; i++)
-                {
-                    Console.WriteLine($"ID: {students[i].Id}, Name: {students[i].Name}, Age:{ students[i].Age}, Course: { students[i].Course}");
-                }
-                */
-
                 foreach (var student in students) 
                 {
+                    // exclude empty indexes
                     if (student != null)
                     {
                         Console.WriteLine($"ID: {student.Id}, Name: {student.Name}, Age:{student.Age}, Course: {student.Course}");
