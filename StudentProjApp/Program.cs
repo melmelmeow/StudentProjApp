@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Formats.Asn1;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -73,6 +74,30 @@ namespace proj
             int studentAge = GetValidIntInput("Enter Student Age: ");
             Console.Write("Enter Student Course: ");
             string studentCourse = Console.ReadLine();
+
+            Console.WriteLine("Confirm student details:");
+            Console.WriteLine($"ID: {studentId}, Name: {studentName}, Age: {studentAge}, Course: {studentCourse}");
+            Console.Write("Is this correct? (yes/no): ");
+            string confirmation = Console.ReadLine();
+
+            if (confirmation.ToLower() == "yes")
+           {
+                students[studentCount] = new Student
+                {
+                   Id = studentId,
+                   Name = studentName,
+                   Age = studentAge,
+                   Course = studentCourse
+                };
+               studentCount++;
+               Console.WriteLine("Student added successfully.");
+           }
+           else
+           { 
+                Console.WriteLine("Student addition cancelled.");
+           }
+        }
+            /*
             students[studentCount] = new Student
             {
                 Id = studentId,
@@ -128,8 +153,44 @@ namespace proj
             Console.WriteLine("Update Student");
             Console.WriteLine("----------------");
             int studentId = GetValidIntInput("Enter Student ID you want to update: ");
+    for (int i = 0; i < studentCount; i++)
+    {
+        if (students[i].Id == studentId)
+        {
+            Console.WriteLine("Student Found:");
+            Console.Write("Enter new Student Name: ");
+            string newName = Console.ReadLine();
+            int newAge = GetValidIntInput("Enter new Student Age: ");
+            Console.Write("Enter new Student Course: ");
+            string newCourse = Console.ReadLine();
+            
+            Console.WriteLine("You are about to update the student with the following details:");
+            Console.WriteLine("ID: " + studentId);
+            Console.WriteLine("Name: " + newName);
+            Console.WriteLine("Age: " + newAge);
+            Console.WriteLine("Course: " + newCourse);
+            
+            Console.Write("Are you sure you want to update this student? (yes/no): ");
+            string confirmation = Console.ReadLine().ToLower();
+            
+            if (confirmation == "yes")
+            {
+                students[i].Name = newName;
+                students[i].Age = newAge;
+                students[i].Course = newCourse;
+                Console.WriteLine("Student updated successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Update cancelled.");
+            }
+            return;
+        }
+    }
+    Console.WriteLine("Student not found.");
             // TODO much better of traversing foreach
-            for (int i = 0; i < studentCount; i++)
+            /*
+               for (int i = 0; i < studentCount; i++)
             {
                 if (students[i].Id == studentId)
                 {
@@ -144,7 +205,7 @@ namespace proj
 
                 }
             }
-            Console.WriteLine("Student not found.");
+            Console.WriteLine("Student not found."); */
         }
         public static void DeleteStudent()
         {
