@@ -1,13 +1,19 @@
 ﻿using System;
-using System.Xml.Serialization;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+
 namespace proj
 {
     public static class Program
     {
         private static Student[] students = new Student[56];
         private static int studentCount = 0;
+        private const string filePath = @"csvfile.csv";
         public static void Main(string[] args)
         {
+            FileLoadStudents();
+            
             while (true)
             {
                 DisplayMenu();
@@ -75,6 +81,7 @@ namespace proj
                 Course = studentCourse
             };
             studentCount++;
+            FileSaveStudents();
             Console.WriteLine("Student added successfully.");
         }
         /**
@@ -132,6 +139,7 @@ namespace proj
                     Console.Write("Enter new Student Course: ");
                     students[i].Course = Console.ReadLine();
                     Console.WriteLine("Student updated successfully.");
+                    FileSaveStudents();
                     return;
 
                 }
@@ -163,6 +171,8 @@ namespace proj
                         // remove the record by index
                         students[studentIdx] = null;                        
                         studentCount = studentCount - 1;
+                        // save the data to file
+                        FileSaveStudents();
                         Console.WriteLine("Student deleted successfully." + studentId);
                     return;
                     }
@@ -203,6 +213,51 @@ namespace proj
             
             }
         }
+
+        public static void FileLoadStudents()
+        {
+            if ( ! File.Exists(filePath))
+            {
+                return;
+            }
+            List<string[]> csvData = File.ReadAllLines(filePath).Select(x => x.Split(',')).ToList();
+            foreach (var fileData in csvData)
+            {
+                if (fileData[0] != "")
+                {
+                    students[studentCount] = new Student
+                    {
+                        Id = Convert.ToInt32(fileData[0]),
+                        Name = fileData[1],
+                        Age = Convert.ToInt32(fileData[2]),
+                        Course = fileData[3]
+                    };
+                    studentCount++;
+                }
+
+            }
+        }
+
+        public static void FileSaveStudents()
+        {                    
+            var lineFile = new StringBuilder();
+
+            // convert our object into string
+            foreach(var student in students)
+            {
+                if(student != null)
+                {
+                    lineFile.AppendLine(student.Id.ToString() + "," + student.Name + "," + student.Age.ToString() + "," + student.Course);                
+                }
+            }
+                                  
+            File.WriteAllText(filePath, lineFile.ToString());
+            
+   
+        }
+
+
+
         public class Student
         {
             public int Id { get; set; }
