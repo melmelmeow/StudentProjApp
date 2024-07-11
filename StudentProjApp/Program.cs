@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 namespace proj
 {
     public static class Program
@@ -139,6 +140,46 @@ return;
             Console.WriteLine("Delete Student");
             Console.WriteLine("----------------");
             int studentId = GetValidIntInput("Enter Student ID you want to delete: ");
+            // add counter for index students
+            int studentIdx = 0;
+            foreach (var student in students)
+            {
+                if (student != null && student.Id == studentId)
+                {
+                    // get the counter
+                     Console.WriteLine("Student Found:");
+                    Console.WriteLine($"ID: {student.Id}, Name: {student.Name}, Age:{ student.Age}, Course: { student.Course}");
+                
+                    // put a confirmation statement
+                    Console.WriteLine("Do you really want to delete this Student ID? ");
+                    // get the confirmation
+                    int choice = GetValidIntInput("Enter your choice (1 for yes, 2 for no): ");
+                    if (choice == 1)
+                    {
+                        // remove the record by index
+                        students[studentIdx] = null;                        
+                        studentCount = studentCount - 1;
+                        Console.WriteLine("Student deleted successfully." + studentId);
+                    return;
+                    }
+                    else if (choice == 2)
+                    {
+                        Console.WriteLine("Deletion cancelled.");
+                        return;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid choice. Please try again.");
+                    }
+                }
+                studentIdx++;
+            }
+
+            // if no student found 
+   
+                //Console.WriteLine("Student not found.");
+
+            /*
             for (int i = 0; i < studentCount; i++)
             {
                 if (students[i].Id == studentId)
@@ -151,21 +192,35 @@ return;
                 }
             }
             Console.WriteLine("Student not found.");
+            */
         }
         public static void ListAllStudents()
         {
             Console.WriteLine("List All Students:");
             Console.WriteLine("----------------");
+            
+        
             if (studentCount == 0)
             {
                 Console.WriteLine("No students to display.");
             }
             else
             {
+                /*
                 for (int i = 0; i < studentCount; i++)
                 {
                     Console.WriteLine($"ID: {students[i].Id}, Name: {students[i].Name}, Age:{ students[i].Age}, Course: { students[i].Course}");
                 }
+                */
+
+                foreach (var student in students) 
+                {
+                    if (student != null)
+                    {
+                        Console.WriteLine($"ID: {student.Id}, Name: {student.Name}, Age:{student.Age}, Course: {student.Course}");
+                    }
+                }
+            
             }
         }
         public class Student
