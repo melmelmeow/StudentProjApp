@@ -46,15 +46,16 @@ namespace proj
                         Console.Write("(2 for no): ");
                         Console.ResetColor();
                         string input = Console.ReadLine();
-                        if (input.ToLower() == "1") 
+                        if (input == "1") 
                         {
-                        // Add code for "yes" case
+                          // Add code for "yes" case
+                          Environment.Exit(0); 
                         } 
-                        else if (input.ToLower() == "2") 
+                        else if (input == "2")
                         {
-                        // Add code for "no" case
+                            // No need to do anything, just continue to the next iteration
                         }
-                        return;
+                         break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Invalid choice, please try again.");
@@ -259,13 +260,13 @@ namespace proj
                     // put a confirmation statement
                     Console.WriteLine("Do you really want to delete this Student ID? ");
                     // get the confirmation
-                    int choice = GetValidIntInput("Enter your choice ");
-                        Console.ForegroundColor = ConsoleColor.Green;
+                     Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write("(1 for yes) "); 
                         Console.ResetColor();
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("(2 for no): ");
                         Console.ResetColor();
+                    int choice = GetValidIntInput("Enter your choice ");
                     // TODO: much better with switch statement
                     if (choice == 1)
                     {
