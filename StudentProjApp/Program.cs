@@ -15,7 +15,9 @@ namespace proj
                 string choice = Console.ReadLine();
                 if (!IsNumeric(choice))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid character, please try again.");
+                    Console.ResetColor();
                     continue;
                 }
                 switch (choice)
@@ -36,14 +38,30 @@ namespace proj
                         ListAllStudents();
                         break;
                     case "6":
-                        Console.WriteLine("Exiting the registration.");
+                        Console.WriteLine("Exiting the registration? ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("(1 for yes) "); 
+                        Console.ResetColor();
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("(2 for no): ");
+                        Console.ResetColor();
+                        string input = Console.ReadLine();
+                        if (input.ToLower() == "1") 
+                        {
+                        // Add code for "yes" case
+                        } 
+                        else if (input.ToLower() == "2") 
+                        {
+                        // Add code for "no" case
+                        }
                         return;
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Invalid choice, please try again.");
+                        Console.ResetColor();
                         break;
                 }
             }
-
         }
         public static void DisplayMenu()
         {
@@ -68,13 +86,18 @@ namespace proj
             int studentAge = GetValidIntInput("Enter Student Age: ");
             Console.Write("Enter Student Course: ");
             string studentCourse = Console.ReadLine();
-
             Console.WriteLine("Confirm student details:");
             Console.WriteLine($"ID: {studentId}, Name: {studentName}, Age: {studentAge}, Course: {studentCourse}");
-            Console.Write("Is this correct? (yes/no): ");
+            Console.WriteLine("Is this correct? ");
+            Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("(1 for yes) "); 
+                        Console.ResetColor();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("(2 for no): ");
+                        Console.ResetColor();
             string confirmation = Console.ReadLine();
 
-            if (confirmation.ToLower() == "yes")
+            if (confirmation.ToLower() == "1")
            {
                 students[studentCount] = new Student
                 {
@@ -84,11 +107,15 @@ namespace proj
                    Course = studentCourse
                 };
                studentCount++;
+               Console.ForegroundColor = ConsoleColor.Green;
                Console.WriteLine("Student added successfully.");
+               Console.ResetColor();
            }
            else
            { 
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Student addition cancelled.");
+                Console.ResetColor();
            }
         }
             /*
@@ -116,7 +143,9 @@ namespace proj
 
                 if (!int.TryParse(input, out result))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid character, please try again.");
+                    Console.ResetColor();
                 }
             } while (!int.TryParse(input, out result));
             return result;
@@ -134,12 +163,16 @@ namespace proj
             {
                 if (student != null && student.Id == studentId)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Student Found:");
+                    Console.ResetColor();
                     Console.WriteLine($"ID: {student.Id}, Name: {student.Name}, Age:{ student.Age}, Course: { student.Course}");                
                     return;
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Student not found.");
+            Console.ResetColor();
         }
         public static void UpdateStudent()
         {
@@ -162,25 +195,35 @@ namespace proj
             Console.WriteLine("Name: " + newName);
             Console.WriteLine("Age: " + newAge);
             Console.WriteLine("Course: " + newCourse);
-            
-            Console.Write("Are you sure you want to update this student? (yes/no): ");
+            Console.WriteLine("Are you sure you want to update this student? ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("(1 for yes) "); 
+                        Console.ResetColor();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("(2 for no): ");
+                        Console.ResetColor();
             string confirmation = Console.ReadLine().ToLower();
-            
-            if (confirmation == "yes")
+            if (confirmation == "1")
             {
                 students[i].Name = newName;
                 students[i].Age = newAge;
                 students[i].Course = newCourse;
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Student updated successfully.");
+                Console.ResetColor();
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Update cancelled.");
+                Console.ResetColor();
             }
             return;
         }
     }
+    Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine("Student not found.");
+    Console.ResetColor();
             // TODO much better of traversing foreach
             /*
                for (int i = 0; i < studentCount; i++)
@@ -213,43 +256,53 @@ namespace proj
                     // get the counter
                     Console.WriteLine("Student Found:");
                     Console.WriteLine($"ID: {student.Id}, Name: {student.Name}, Age:{ student.Age}, Course: { student.Course}");
-                
                     // put a confirmation statement
                     Console.WriteLine("Do you really want to delete this Student ID? ");
                     // get the confirmation
-                    int choice = GetValidIntInput("Enter your choice (1 for yes, 2 for no): ");
+                    int choice = GetValidIntInput("Enter your choice ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("(1 for yes) "); 
+                        Console.ResetColor();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("(2 for no): ");
+                        Console.ResetColor();
                     // TODO: much better with switch statement
                     if (choice == 1)
                     {
                         // remove the record by index
                         students[studentIdx] = null;                        
                         studentCount = studentCount - 1;
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Student deleted successfully." + studentId);
+                        Console.ResetColor();
                     return;
                     }
                     else if (choice == 2)
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Deletion cancelled.");
+                        Console.ResetColor();
                         return;
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Invalid choice. Please try again.");
+                        Console.ResetColor();
                     }
                 }
                 studentIdx++;
             }
-
         }
         public static void ListAllStudents()
         {
             Console.WriteLine("List All Students:");
             Console.WriteLine("----------------");
-            
-        
             if (studentCount == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("No students to display.");
+                Console.ResetColor();
             }
             else
             {
@@ -261,7 +314,6 @@ namespace proj
                         Console.WriteLine($"ID: {student.Id}, Name: {student.Name}, Age:{student.Age}, Course: {student.Course}");
                     }
                 }
-            
             }
         }
         public class Student
